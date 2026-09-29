@@ -32,29 +32,19 @@ class PosController extends Controller
             'items.*.qty'       => 'required|integer|min:1',
         ]);
 
-        // Semua proses dibungkus transaksi DB (kalau ada error, semua dibatalkan)
         $trx = DB::transaction(function () use ($data) {
-
-            // Hitung ulang total DARI DATABASE (jangan percaya harga dari browser — praktik keamanan)
             $subtotal = 0;
             $detailRows = [];
             foreach ($data['items'] as $item) {
                 $product = Product::findOrFail($item['id']);
                 $lineSubtotal = $product->price * $item['qty'];
                 $subtotal += $lineSubtotal;
-                $detailRows[] = [
-                    'product'  => $product,
-                    'qty'      => $item['qty'],
-                    'subtotal' => $lineSubtotal,
-                ];
+                $detailRows[] = ['product' => $product, 'qty' => $item['qty'], 'subtotal' => $lineSubtotal];
             }
 
-            $total = $subtotal; // (diskon bisa ditambah nanti)
-
-            // Buat kode transaksi unik: TRX-YYYYMMDD-XXXX
+            $total = $subtotal;
             $code = 'TRX-' . now()->format('Ymd') . '-' . str_pad(Transaction::whereDate('created_at', today())->count() + 1, 4, '0', STR_PAD_LEFT);
 
-            // 1) Simpan header transaksi
             $transaction = Transaction::create([
                 'transaction_code'  => $code,
                 'user_id'           => auth()->id(),
@@ -67,10 +57,8 @@ class PosController extends Controller
                 'change_amount'     => max(0, $data['payment_amount'] - $total),
             ]);
 
-            // 2) Simpan tiap item + kurangi stok + catat inventory movement
             foreach ($detailRows as $row) {
                 $product = $row['product'];
-
                 TransactionDetail::create([
                     'transaction_id' => $transaction->id,
                     'product_id'     => $product->id,
@@ -79,11 +67,7 @@ class PosController extends Controller
                     'cost_price'     => $product->cost_price,
                     'subtotal'       => $row['subtotal'],
                 ]);
-
-                // Kurangi stok
                 $product->decrement('stock', $row['qty']);
-
-                // Catat pergerakan stok (audit trail)
                 InventoryMovement::create([
                     'product_id' => $product->id,
                     'type'       => 'out',
@@ -96,11 +80,16 @@ class PosController extends Controller
             return $transaction;
         });
 
-        // Kirim balik ID transaksi (untuk diarahkan ke struk di STEP 8C)
         return response()->json([
             'success' => true,
             'transaction_id' => $trx->id,
             'transaction_code' => $trx->transaction_code,
         ]);
+    }
+
+    public function receipt(Transaction $transaction)
+    {
+        $transaction->load('details.product', 'user', 'paymentMethod');
+        return view('pos.receipt', compact('transaction'));
     }
 }

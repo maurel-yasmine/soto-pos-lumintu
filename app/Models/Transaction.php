@@ -11,6 +11,10 @@ class Transaction extends Model
         'subtotal', 'discount', 'total_amount', 'payment_amount', 'change_amount',
     ];
 
+    protected $casts = [
+        'transaction_date' => 'datetime',
+    ];
+
     public function details()
     {
         return $this->hasMany(TransactionDetail::class);

@@ -206,14 +206,11 @@
             .then(async function (res) {
                 const data = await res.json().catch(function () { return {}; });
                 if (res.ok && data.success) {
-                    alert('Transaksi berhasil! Kode: ' + data.transaction_code);
-                    cart = [];
-                    renderCart();
-                    tutupBayar();
+                    window.location.href = '/receipt/' + data.transaction_id;
                 } else {
                     alert('Gagal menyimpan. Status: ' + res.status + ' ' + (data.message || JSON.stringify(data)));
+                    document.getElementById('btnProses').disabled = false;
                 }
-                document.getElementById('btnProses').disabled = false;
             })
             .catch(function (err) {
                 alert('Error: ' + err);
