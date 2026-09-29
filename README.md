@@ -1,58 +1,77 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Soto Seger Solo Lumintu — POS & Business Intelligence System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi Point of Sale (POS) berbasis web untuk restoran Soto Seger Solo Lumintu,
+lengkap dengan operational database, ETL pipeline, data warehouse, dan
+business intelligence dashboard.
 
-## About Laravel
+Proyek ini dibangun sebagai portofolio untuk peran Data Analyst / Data Engineer /
+Business Intelligence, menunjukkan alur data end-to-end dari transaksi kasir sampai
+analisis bisnis.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Dibuat oleh Maurel Chairinniswah Yasmine — Computer Science, BINUS University.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Arsitektur
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Frontend (Blade + Tailwind + JS) -> Laravel Backend (PHP) -> MySQL Operational Database (3NF) -> Pentaho ETL -> Data Warehouse (Star Schema) -> Power BI Dashboard
 
-## Learning Laravel
+## Fitur
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Aplikasi Kasir (POS):
+- Login multi-role (Admin & Kasir)
+- POS interface: pilih menu, keranjang, hitung total otomatis
+- Pembayaran: Cash / QRIS / Debit / E-Wallet (dengan hitung kembalian)
+- Struk digital + QR code + cetak/print
+- Manajemen produk & kategori (CRUD)
+- Manajemen inventory + low stock alert + audit trail
+- Riwayat transaksi dengan filter
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Business Intelligence:
+- Dashboard KPI: Revenue, Transaksi, Items Sold, Avg Transaction, Profit, Profit Margin
+- Grafik: tren revenue, produk terlaris, revenue per kategori, metode pembayaran
+- Filter periode (harian/mingguan/bulanan)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Tech Stack
 
-## Agentic Development
+- Frontend: HTML, Tailwind CSS, JavaScript, Chart.js
+- Backend: Laravel (PHP)
+- Database: MySQL
+- ETL: Pentaho Data Integration
+- Data Warehouse: MySQL (Star Schema)
+- BI: Power BI
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Desain Database
 
-```bash
-composer require laravel/boost --dev
+Operational database ternormalisasi (3NF) dengan 7 tabel:
+users, categories, products, payment_methods, transactions, transaction_details, inventory_movements.
 
-php artisan boost:install
-```
+Data warehouse memakai dimensional modeling (star schema):
+DIM_DATE, DIM_PRODUCT, DIM_CATEGORY, DIM_PAYMENT_METHOD, DIM_CASHIER, FACT_SALES.
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Cara Menjalankan (Lokal)
 
-## Contributing
+Butuh: PHP, Composer, MySQL (via Laragon), Node.js.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    composer install
+    npm install
+    cp .env.example .env
+    php artisan key:generate
+    php artisan migrate --seed --seeder=MasterDataSeeder
+    npm run build
+    php artisan serve
 
-## Code of Conduct
+Akun default:
+- Admin: admin@soto.test / password
+- Kasir: kasir@soto.test / password
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Business Questions yang Dijawab
 
-## Security Vulnerabilities
+Total revenue, jumlah transaksi, rata-rata transaksi, produk terlaris, kategori
+paling menguntungkan, jam ramai, metode bayar terpopuler, profitabilitas produk,
+low stock, tren revenue, dan analisis product performance.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Status Pengembangan
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- [x] Aplikasi POS (kasir, transaksi, struk, inventory)
+- [x] Business analysis dashboard
+- [ ] Pentaho ETL - Data Warehouse
+- [ ] Power BI Dashboard
