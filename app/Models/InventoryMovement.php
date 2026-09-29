@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class InventoryMovement extends Model
 {
-    //
+    public $timestamps = false;
+
+    protected $fillable = [
+        'product_id', 'type', 'quantity', 'reference', 'created_at',
+    ];
 }

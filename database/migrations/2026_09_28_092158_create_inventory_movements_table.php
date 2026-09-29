@@ -10,12 +10,17 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('inventory_movements', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('inventory_movements', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('product_id')->constrained()->onDelete('cascade');
+        $table->enum('type', ['in', 'out', 'adjustment']);
+        $table->integer('quantity');
+        $table->string('reference')->nullable();
+        $table->timestamp('created_at')->useCurrent();
+    });
+}
+
 
     /**
      * Reverse the migrations.
