@@ -11,4 +11,13 @@ class InventoryMovement extends Model
     protected $fillable = [
         'product_id', 'type', 'quantity', 'reference', 'created_at',
     ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

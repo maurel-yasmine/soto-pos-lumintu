@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PosController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\InventoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,6 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
     Route::post('/pos/checkout', [PosController::class, 'checkout'])->name('pos.checkout');
     Route::get('/receipt/{transaction}', [PosController::class, 'receipt'])->name('pos.receipt');
+
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+
+    Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
+    Route::post('/inventory/{product}/restock', [InventoryController::class, 'restock'])->name('inventory.restock');
 });
 
 require __DIR__.'/auth.php';
