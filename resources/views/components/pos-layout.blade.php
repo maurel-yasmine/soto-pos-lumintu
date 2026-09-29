@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Soto Seger Solo Lumintu' }} — POS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+    </style>
 </head>
 <body class="bg-green-50 text-gray-800 antialiased">
     <div class="min-h-screen flex">
@@ -20,14 +25,14 @@
             </div>
 
             <nav class="flex-1 px-3 py-4 space-y-1 text-sm">
-                <a href="{{ url('/dashboard') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition"><span>▪</span> Dashboard</a>
-                <a href="{{ url('/pos') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition"><span>🧾</span> POS / Kasir</a>
-                <a href="{{ url('/products') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition"><span>🍜</span> Produk</a>
-                <a href="{{ url('/categories') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition"><span>🏷️</span> Kategori</a>
-                <a href="{{ url('/inventory') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition"><span>📦</span> Inventory</a>
-                <a href="{{ url('/transactions') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition"><span>💳</span> Transaksi</a>
-                <a href="{{ url('/users') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition"><span>👥</span> Users</a>
-                <a href="{{ url('/reports') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition"><span>📈</span> Reports</a>
+                <a href="{{ url('/dashboard') }}" class="block px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition">Dashboard</a>
+                <a href="{{ url('/pos') }}" class="block px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition">POS / Kasir</a>
+                <a href="{{ url('/products') }}" class="block px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition">Produk</a>
+                <a href="{{ url('/categories') }}" class="block px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition">Kategori</a>
+                <a href="{{ url('/inventory') }}" class="block px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition">Inventory</a>
+                <a href="{{ url('/transactions') }}" class="block px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition">Transaksi</a>
+                <a href="{{ url('/users') }}" class="block px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition">Users</a>
+                <a href="{{ url('/reports') }}" class="block px-3 py-2.5 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 transition">Reports</a>
             </nav>
 
             <div class="border-t border-green-100 p-4">
@@ -35,7 +40,7 @@
                 <p class="text-xs text-gray-400 mb-2">{{ Auth::user()->email ?? '' }}</p>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="w-full text-left text-sm text-red-500 hover:text-red-600">⎋ Logout</button>
+                    <button type="submit" class="w-full text-left text-sm text-red-500 hover:text-red-600">Logout</button>
                 </form>
             </div>
         </aside>
