@@ -71,7 +71,9 @@ low stock, tren revenue, dan analisis product performance.
 
 ## Status Pengembangan
 
+## Status Pengembangan
+
 - [x] Aplikasi POS (kasir, transaksi, struk, inventory)
 - [x] Business analysis dashboard
-- [ ] Pentaho ETL - Data Warehouse
-- [ ] Power BI Dashboard
+- [x] Pentaho ETL - Data Warehouse
+- [x] Power BI Dashboard
