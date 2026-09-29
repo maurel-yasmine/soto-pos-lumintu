@@ -1,6 +1,6 @@
 # Soto Seger Solo Lumintu — POS & Business Intelligence System
 
-Aplikasi Point of Sale (POS) berbasis web untuk restoran Soto Seger Solo Lumintu,
+Aplikasi Point of Sale (POS) berbasis web untuk warung makan Soto Seger Solo Lumintu,
 lengkap dengan operational database, ETL pipeline, data warehouse, dan
 business intelligence dashboard.
 
